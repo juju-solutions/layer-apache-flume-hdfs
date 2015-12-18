@@ -1,0 +1,16 @@
+# This file contains values that are likely to change per distribution.
+# The aim is to make it easier to update / extend the charms with
+# minimal changes to the shared code in charmhelpers.
+groups:
+    - 'hadoop'
+users:
+    flume:
+        groups: ['hadoop']
+dirs:
+    flume:
+        path: '/usr/lib/flume-hdfs'
+    flume_conf:
+        path: '/etc/flume-hdfs/conf'
+    flume_logs:
+        path: '/var/log/flume-hdfs'
+        owner: 'flume'

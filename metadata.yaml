@@ -1,0 +1,12 @@
+name: apache-flume-hdfs
+summary: Ingest data into HDFS
+maintainer: Kevin Monroe <kevin.monroe@canonical.com>
+description: |
+  Collect, aggregate, and move large amounts of data into HDFS.
+tags: ["applications", "bigdata", "hadoop", "apache"]
+provides:
+  hadoop-plugin:
+    interface: hadoop-plugin
+    scope: container
+  flume-agent:
+    interface: flume-agent

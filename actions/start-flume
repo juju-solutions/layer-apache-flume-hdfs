@@ -1,0 +1,3 @@
+#!/bin/bash
+
+su flume -c "/usr/lib/flume-hdfs/bin/flume-ng agent -c /etc/flume-hdfs/conf -f /etc/flume-hdfs-conf/flume.conf -n a1"

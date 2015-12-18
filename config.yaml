@@ -1,0 +1,67 @@
+options:
+    resources_mirror:
+      type: string
+      default: ''
+      description: |
+        URL from which to fetch resources (e.g., Hadoop binaries) instead
+        of Launchpad.
+    channel_capacity:
+      type: int
+      default: 1000
+      description: |
+        The maximum number of events stored in the channel.
+    channel_transaction_capacity:
+      type: int
+      default: 100
+      description: |
+        The maximum number of events the channel will take from a source or
+        give to a sink per transaction.
+    dfs_replication:
+      type: int
+      default: 3
+      description: |
+        The DFS replication value. The default (3) is the same as the Namenode
+        provided by apache-hadoop-hdfs-master, but may be overriden for this
+        service.
+    roll_count:
+      type: int
+      default: 0
+      description: |
+        Number of events written to file before it is rolled. A value of 0 (the
+        default) means never roll based on number of events.
+    roll_interval:
+      type: int
+      default: 300
+      description: |
+        Number of seconds to wait before rolling the current file. Default
+        will roll the file after 5 minutes. A value of 0 means never roll
+        based on a time interval.
+    roll_size:
+      type: string
+      default: '10000000'
+      description: |
+        File size to trigger roll, in bytes. Default will roll the file once
+        it reaches 10 MB. A value of 0 means never roll based on file size.
+    protocol:
+      type: string
+      default: 'avro'
+      description: |
+        Ingestion protocol for the agent source. Currently only 'avro' is supported.
+    sink_compression:
+      type: string
+      default: ''
+      description: |
+        Compression codec for the agent sink. An empty value will write events
+        to HDFS uncompressed. You may specify 'snappy' here to compress written
+        events using the snappy codec.
+    sink_serializer:
+      type: string
+      default: 'text'
+      description: |
+        Specify the serializer used when the sink writes to HDFS. Either
+        'avro_event' or 'text' are supported.
+    source_port:
+      type: int
+      default: 4141
+      description: |
+        Port on which the agent source is listening.

@@ -1,0 +1,6 @@
+start-flume:
+    description: Start the Flume-HDFS daemon
+stop-flume:
+    description: Stop the Flume-HDFS daemon
+restart-flume:
+    description: Restart the Flume-HDFS daemon
