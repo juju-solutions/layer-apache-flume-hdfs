@@ -55,19 +55,26 @@ def missing_hadoop():
 
 
 @when('bootstrapped', 'hadoop-plugin.hdfs.ready')
-@when_not('flume-agent.available')
-def waiting_hadoop(hadoop):
+@when_not('flume-agent.connected')
+def waiting_flume_to_connect(hadoop):
     hookenv.status_set('waiting', 'Waiting for a Flume agent to connect')
+
+@when('bootstrapped', 'hadoop-plugin.hdfs.ready', 'flume-agent.connected')
+@when_not('flume-agent.available')
+def waiting_availuable_flume(hadoop, flume_agent):
+    flume_agent.send_configuration(hookenv.config()['source_port'])    
+    hookenv.status_set('waiting', 'Waiting for a Flume agent to become availuable')
 
 
 @when('flumehdfs.installed', 'hadoop-plugin.hdfs.ready', 'flume-agent.available')
 @when_not('flumehdfs.started')
-def configure_flume(*args):
+def configure_flume(hdfs, flume_agent_rel):
     from charms.flume import Flume  # in lib/charms; not available until after bootstrap
 
     hookenv.status_set('maintenance', 'Setting up Flume')
     flume = Flume(dist_config())
     flume.configure_flume()
+    hookenv.log("Sending port {}".format(hookenv.config()['source_port']))
     set_state('flumehdfs.started')
     hookenv.status_set('active', 'Ready')
 

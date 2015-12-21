@@ -29,14 +29,14 @@ class Flume(object):
                               skip_top_level=True)
         self.dist_config.add_users()
         self.dist_config.add_dirs()
+        self.setup_flume_config()
         unitdata.kv().set('flume_hdfs.installed', True)
 
     def configure_flume(self):
         '''
         handle configuration of Flume and setup the environment
         '''
-        self.setup_flume_config()
-        self.configure_flume()        
+        self.configure_flume_env()        
 
     def setup_flume_config(self):
         '''
@@ -62,17 +62,15 @@ class Flume(object):
         flume_log4j = self.dist_config.path('flume_conf') / 'log4j.properties'
         utils.re_edit_in_place(flume_log4j, {
             r'^flume.log.dir.*': 'flume.log.dir={}'.format(self.dist_config.path('flume_logs')),
-        })
-        
-        # TODO(kt): not sure about the context here should it contain...        
+        })        
+
+    def configure_flume_env(self):
         config = hookenv.config()        
         templating.render(
             source='flume.conf.j2',
             target=self.dist_config.path('flume_conf') / 'flume.conf',
             context={'dist_config': self.dist_config, 'config': config})
 
-
-    def configure_flume_env(self):
         flume_bin = self.dist_config.path('flume') / 'bin'
         with utils.environment_edit_in_place('/etc/environment') as env:
             if flume_bin not in env['PATH']:
