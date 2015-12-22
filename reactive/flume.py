@@ -74,7 +74,7 @@ def configure_flume(hdfs, flume_agent_rel):
     hookenv.status_set('maintenance', 'Setting up Flume')
     flume = Flume(dist_config())
     flume.configure_flume()
-    hookenv.log("Sending port {}".format(hookenv.config()['source_port']))
+    flume.restart()
     set_state('flumehdfs.started')
     hookenv.status_set('active', 'Ready')
 
