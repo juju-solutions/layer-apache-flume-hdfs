@@ -14,30 +14,24 @@ other Flume agents such as `apache-flume-syslog` and `apache-flume-twitter`.
 
 ## Usage
 
-This charm leverages our pluggable Hadoop model with the `hadoop-plugin`
-interface. This means that you will need to deploy a base Apache Hadoop cluster
-to run Flume. The suggested deployment method is to use the
-[apache-ingestion-flume](https://jujucharms.com/u/bigdata-dev/apache-ingestion-flume/)
-bundle. This will deploy the Apache Hadoop platform with a single Apache Flume
-unit that communicates with the cluster by relating to the
-`apache-hadoop-plugin` subordinate charm:
+This charm is uses the hadoob base layer and the hdfs interface to pull its dependencies
+and act as a client to a hadoop namenode:
 
-    juju quickstart u/bigdata-dev/apache-ingestion-flume
+You may manually deploy the recommended environment as follows:
 
-Alternatively, you may manually deploy the recommended environment as follows:
+    juju deploy apache-hadoop-datanode datanode
+    juju deploy apache-hadoop-namenode namenode
+    juju deploy apache-hadoop-nodemanager nodemgr
+    juju deploy apache-hadoop-resourcemanager resourcemgr
 
-    juju deploy apache-hadoop-hdfs-master hdfs-master
-    juju deploy apache-hadoop-yarn-master yarn-master
-    juju deploy apache-hadoop-compute-slave compute-slave
-    juju deploy apache-hadoop-plugin plugin
+    juju add-relation namenode datanode
+    juju add-relation resourcemgr nodemgr
+    juju add-relation resourcemgr namenode
+
+Deploy flume:
+
     juju deploy apache-flume-hdfs flume-hdfs
-
-    juju add-relation yarn-master hdfs-master
-    juju add-relation compute-slave yarn-master
-    juju add-relation compute-slave hdfs-master
-    juju add-relation plugin yarn-master
-    juju add-relation plugin hdfs-master
-    juju add-relation flume-hdfs plugin
+    juju add-relation flume-hdfs namenode
 
 The deployment at this stage isn't very exciting, as the `flume-hdfs` service
 is waiting for other Flume agents to connect and send data. You'll probably

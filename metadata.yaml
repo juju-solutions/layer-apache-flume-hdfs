@@ -5,8 +5,9 @@ description: |
   Collect, aggregate, and move large amounts of data into HDFS.
 tags: ["applications", "bigdata", "hadoop", "apache"]
 provides:
-  hadoop-plugin:
-    interface: hadoop-plugin
-    scope: container
   flume-agent:
     interface: flume-agent
+requires:
+  hdfs:
+    interface: hdfs
+    

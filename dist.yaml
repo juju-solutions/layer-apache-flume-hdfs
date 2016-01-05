@@ -1,8 +1,8 @@
 # This file contains values that are likely to change per distribution.
 # The aim is to make it easier to update / extend the charms with
 # minimal changes to the shared code in charmhelpers.
-groups:
-    - 'hadoop'
+vendor: 'apache'
+hadoop_version: '2.7.1'
 users:
     flume:
         groups: ['hadoop']
@@ -14,3 +14,6 @@ dirs:
     flume_logs:
         path: '/var/log/flume-hdfs'
         owner: 'flume'
+ports:
+    # TODO(kjackal): This looks like a bug
+    # I need to set ports or else the merging with the lower layers will fail.

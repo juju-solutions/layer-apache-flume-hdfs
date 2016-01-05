@@ -1,11 +1,6 @@
 options:
   output_dir: /home/ubuntu/resources
 resources:
-  pathlib:
-    pypi: path.py>=7.0
-  jujubigdata:
-    pypi: jujubigdata>=4.0.0,<5.0.0
-optional_resources:
   flume-x86_64:
     url: https://s3.amazonaws.com/jujubigdata/apache/x86_64/apache-flume-1.6.0-bin-defd21a.tar.gz
     hash: defd21ad8d2b6f28cc0a16b96f652099
