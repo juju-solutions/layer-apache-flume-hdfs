@@ -28,7 +28,7 @@ You may manually deploy the recommended environment as follows:
     juju add-relation resourcemgr nodemgr
     juju add-relation resourcemgr namenode
 
-Deploy flume:
+Deploy Flume HDFS:
 
     juju deploy apache-flume-hdfs flume-hdfs
     juju add-relation flume-hdfs namenode
