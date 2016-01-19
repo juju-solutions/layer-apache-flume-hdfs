@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# TODO(kjackal): paths should be looked up from the config
-ps -ef | grep "/usr/lib/flume-hdfs" | grep -v grep | awk '{print $2}' | xargs kill -9
-sleep 2
-su flume -c "/usr/lib/flume-hdfs/bin/flume-ng agent -c /etc/flume-hdfs/conf -f /etc/flume-hdfs/conf/flume.conf -n a1"
+source /etc/environment
+ps -ef | grep "$FLUME_HOME" | grep -v grep | awk '{print $2}' | xargs kill -9
+sleep 5
+su flume -c "nohup $FLUME_HOME/bin/flume-ng agent -c $FLUME_CONF_DIR -f $FLUME_CONF_DIR/flume.conf -n a1 &"
+sleep 10

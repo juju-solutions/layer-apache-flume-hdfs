@@ -1,3 +1,5 @@
 #!/bin/bash
 
-su flume -c "/usr/lib/flume-hdfs/bin/flume-ng agent -c /etc/flume-hdfs/conf -f /etc/flume-hdfs-conf/flume.conf -n a1"
+source /etc/environment
+su flume -c "nohup $FLUME_HOME/bin/flume-ng agent -c $FLUME_CONF_DIR -f $FLUME_CONF_DIR/flume.conf -n a1 &"
+sleep 10
