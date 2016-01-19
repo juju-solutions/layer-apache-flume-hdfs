@@ -1,3 +1,4 @@
 #!/bin/bash
 
+# TODO(kjackal): paths should be looked up from the config
 ps -ef | grep "/usr/lib/flume-hdfs" | grep -v grep | awk '{print $2}' | xargs kill -9

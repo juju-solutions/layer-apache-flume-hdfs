@@ -23,15 +23,18 @@ You may manually deploy the recommended environment as follows:
     juju deploy apache-hadoop-namenode namenode
     juju deploy apache-hadoop-nodemanager nodemgr
     juju deploy apache-hadoop-resourcemanager resourcemgr
+    juju deploy apache-hadoop-plugin plugin
 
     juju add-relation namenode datanode
     juju add-relation resourcemgr nodemgr
     juju add-relation resourcemgr namenode
+    juju add-relation plugin resourcemgr
+    juju add-relation plugin namenode
 
 Deploy Flume HDFS:
 
     juju deploy apache-flume-hdfs flume-hdfs
-    juju add-relation flume-hdfs namenode
+    juju add-relation flume-hdfs plugin
 
 The deployment at this stage isn't very exciting, as the `flume-hdfs` service
 is waiting for other Flume agents to connect and send data. You'll probably
