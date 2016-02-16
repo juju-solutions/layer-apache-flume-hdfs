@@ -22,14 +22,14 @@ def install_flume(*args):
 
 
 @when('flume-agent.connected')
-def waiting_availuable_flume(flume_agent):
+def sending_connection_info_to_agent(flume_agent):
     flume_agent.send_configuration(hookenv.config()['source_port'])    
     hookenv.status_set('maintenance', 'Broadcasting connection details')
 
 
-@when('flumehdfs.installed', 'hadoop.ready', 'flume-agent.available')
+@when('flumehdfs.installed', 'hadoop.ready')
 @when_not('flumehdfs.started')
-def configure_flume(hdfs, flume_agent_rel):
+def configure_flume(hdfs):
     hookenv.status_set('maintenance', 'Setting up Flume')
     flume = Flume(get_dist_config())
     flume.configure_flume()
@@ -55,11 +55,4 @@ def monitor_config_changes(hdfs):
 def hdfs_disconnected():
     remove_state('flumehdfs.started')
     hookenv.status_set('blocked', 'Waiting for HDFS connection')
-
-
-@when('flumehdfs.started')
-@when_not('flume-agent.available')
-def agent_disconnected():
-    remove_state('flumehdfs.started')
-    hookenv.status_set('blocked', 'Waiting for a connection from a Flume agent')
 

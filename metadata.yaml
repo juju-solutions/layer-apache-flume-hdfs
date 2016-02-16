@@ -7,7 +7,4 @@ tags: ["applications", "bigdata", "hadoop", "apache"]
 provides:
   flume-agent:
     interface: flume-agent
-requires:
-  hdfs:
-    interface: hdfs
     
