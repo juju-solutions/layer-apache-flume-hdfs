@@ -3,7 +3,7 @@ from charms.reactive import set_state, remove_state
 from charmhelpers.core import hookenv
 from charms.flume import Flume
 from charms.hadoop import get_dist_config
-
+from charms.reactive.helpers import data_changed
 
 
 @when_not('hadoop.related')
@@ -21,28 +21,33 @@ def install_flume(*args):
         set_state('flumehdfs.installed')
 
 
-@when('hadoop.ready')
-@when_not('flume-agent.connected')
-def waiting_flume_to_connect(hadoop):
-    hookenv.status_set('blocked', 'Waiting for a Flume agent to connect')
-
-
-@when('hadoop.ready', 'flume-agent.connected')
-@when_not('flume-agent.available')
-def waiting_availuable_flume(hadoop, flume_agent):
+@when('flume-agent.connected')
+def sending_connection_info_to_agent(flume_agent):
     flume_agent.send_configuration(hookenv.config()['source_port'])    
-    hookenv.status_set('waiting', 'Waiting for a Flume agent to become available')
+    hookenv.status_set('maintenance', 'Broadcasting connection details')
 
 
-@when('flumehdfs.installed', 'hadoop.ready', 'flume-agent.available')
+@when('flumehdfs.installed', 'hadoop.ready')
 @when_not('flumehdfs.started')
-def configure_flume(hdfs, flume_agent_rel):
+def configure_flume(hdfs):
     hookenv.status_set('maintenance', 'Setting up Flume')
     flume = Flume(get_dist_config())
     flume.configure_flume()
     flume.restart()
     set_state('flumehdfs.started')
-    hookenv.status_set('active', 'Ready')
+    hookenv.status_set('active', 'Ready (Accepting agent connections)')
+
+
+@when('flumehdfs.installed', 'hadoop.ready', 'flumehdfs.started')
+def monitor_config_changes(hdfs):
+    hookenv.status_set('active', 'Ready (Accepting agent connections)')
+    config = hookenv.config()
+    if not data_changed('configuration', config):
+        return
+
+    flume = Flume(get_dist_config())
+    flume.configure_flume()
+    flume.restart()
 
 
 @when('flumehdfs.started')
@@ -50,11 +55,4 @@ def configure_flume(hdfs, flume_agent_rel):
 def hdfs_disconnected():
     remove_state('flumehdfs.started')
     hookenv.status_set('blocked', 'Waiting for HDFS connection')
-
-
-@when('flumehdfs.started')
-@when_not('flume-agent.available')
-def agent_disconnected():
-    remove_state('flumehdfs.started')
-    hookenv.status_set('blocked', 'Waiting for a connection from a Flume agent')
 

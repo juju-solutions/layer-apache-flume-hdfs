@@ -40,11 +40,6 @@ class Flume(object):
         self.setup_flume_config()
         unitdata.kv().set('flume_hdfs.installed', True)
 
-    def configure_flume(self):
-        '''
-        handle configuration of Flume and setup the environment
-        '''
-        self.configure_flume_env()        
 
     def setup_flume_config(self):
         '''
@@ -72,7 +67,7 @@ class Flume(object):
             r'^flume.log.dir.*': 'flume.log.dir={}'.format(self.dist_config.path('flume_logs')),
         })        
 
-    def configure_flume_env(self):
+    def configure_flume(self):
         config = hookenv.config()        
         templating.render(
             source='flume.conf.j2',
@@ -102,14 +97,18 @@ class Flume(object):
         """
         parts = [command] + list(args)
         quoted = ' '.join("'%s'" % p for p in parts)
+        # This is here to force explicit execution on the background. Too much output causes Popen to fail. 
+        silent = ' '.join([quoted, "2>", "/dev/null", "&"])
         e = utils.read_etc_env()
-        Popen(['su', user, '-c', quoted], env=e)
+        Popen(['su', user, '-c', silent], env=e)
+
 
     def restart(self):
         # check for a java process with our flume dir in the classpath
         if utils.jps(r'-cp .*{}'.format(self.dist_config.path('flume'))):
             self.stop()
         self.start()
+
 
     def start(self):
         self.run_bg(

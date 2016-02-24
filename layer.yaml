@@ -1,4 +1,4 @@
-includes: ['layer:hadoop-client', 'interface:flume-agent']
+includes: ['layer:hadoop-client', 'interface:flume-agent', 'interface:hadoop-plugin']
 options:
   hadoop-client:
     users:
