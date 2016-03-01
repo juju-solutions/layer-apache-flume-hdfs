@@ -5,6 +5,5 @@ description: |
   Collect, aggregate, and move large amounts of data into HDFS.
 tags: ["applications", "bigdata", "hadoop", "apache"]
 provides:
-  flume-agent:
+  flume-source:
     interface: flume-agent
-    

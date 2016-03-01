@@ -1,14 +1,1 @@
-includes: ['layer:hadoop-client', 'interface:flume-agent', 'interface:hadoop-plugin']
-options:
-  hadoop-client:
-    users:
-      flume:
-        groups: ['hadoop']
-    dirs:
-      flume:
-        path: '/usr/lib/flume-hdfs'
-      flume_conf:
-        path: '/etc/flume-hdfs/conf'
-      flume_logs:
-        path: '/var/log/flume-hdfs'
-        owner: 'flume'
+includes: ['layer:apache-flume-base', 'layer:hadoop-client', 'interface:flume-agent']
