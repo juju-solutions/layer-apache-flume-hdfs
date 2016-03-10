@@ -5,12 +5,12 @@ from charms.layer.apache_flume_base import Flume
 from charms.reactive.helpers import any_file_changed
 
 
-@when_not('hadoop.related')
+@when_not('hadoop.joined')
 def report_unconnected():
     hookenv.status_set('blocked', 'Waiting for relation to Hadoop Plugin')
 
 
-@when('hadoop.related')
+@when('hadoop.joined')
 @when_not('hadoop.hdfs.ready')
 def report_waiting(hadoop):  # pylint: disable=unused-argument
     hookenv.status_set('waiting', 'Waiting for HDFS')
