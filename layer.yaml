@@ -1,1 +1,2 @@
+repo: git@github.com:juju-solutions/layer-apache-flume-hdfs.git
 includes: ['layer:apache-flume-base', 'layer:hadoop-client', 'interface:flume-agent']
