@@ -32,4 +32,6 @@ a1.sinks.k1.serializer.compressionCodec = {{ config['sink_compression'] }}
 {% if config['sink_serializer'] == 'avro_event' %}
 # suffix must be .avro for MapRed jobs to work with AVRO serialized files
 a1.sinks.k1.hdfs.fileSuffix = .avro
+{% else %}
+a1.sinks.k1.hdfs.fileSuffix = .txt
 {% endif %}
