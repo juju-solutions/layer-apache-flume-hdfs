@@ -1,9 +1,10 @@
 name: apache-flume-hdfs
 summary: Ingest data into HDFS
-maintainer: Big Data Team <bigdata@lists.ubuntu.com>
+maintainer: Juju Big Data <bigdata@lists.ubuntu.com>
 description: |
   Collect, aggregate, and move large amounts of data into HDFS.
-tags: ["applications", "bigdata", "hadoop", "apache"]
+tags: ["apache", "big_data", "streaming"]
+series: [trusty, xenial]
 provides:
   flume-source:
     interface: flume-agent
