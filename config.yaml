@@ -3,9 +3,8 @@ options:
       type: int
       default: 3
       description: |
-        The DFS replication value. The default (3) is the same as the Namenode
-        provided by apache-hadoop-hdfs-master, but may be overriden for this
-        service.
+        The DFS replication value. The default (3) is the same default as the
+        Namenode charm, but it may be overriden for this application.
     roll_count:
       type: int
       default: 0
