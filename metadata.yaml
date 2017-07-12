@@ -3,8 +3,7 @@ summary: Ingest data into HDFS
 maintainer: Juju Big Data <bigdata@lists.ubuntu.com>
 description: |
   Collect, aggregate, and move large amounts of data into HDFS.
-tags: ["apache", "big_data", "streaming"]
-series: [trusty, xenial]
+tags: ["hadoop"]
 provides:
   flume-source:
     interface: flume-agent
