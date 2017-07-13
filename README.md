@@ -14,18 +14,13 @@ other Flume agents such as `apache-flume-syslog` and `apache-flume-twitter`.
 
 # Deploying
 
-A working Juju installation is assumed to be present. If Juju is not yet set
-up, please follow the [getting-started][] instructions prior to deploying this
-charm.
+This charm requires Juju 2.0 or greater. If Juju is not yet set up, please
+follow the [getting-started][] instructions prior to deploying this charm.
 
 This charm is intended to be deployed via one of the [apache bigtop bundles][].
 For example:
 
     juju deploy hadoop-processing
-
-> **Note**: The above assumes Juju 2.0 or greater. If using an earlier version
-of Juju, use [juju-quickstart][] with the following syntax: `juju quickstart
-hadoop-processing`.
 
 This will deploy an Apache Bigtop Hadoop cluster. More information about this
 deployment can be found in the [bundle readme](https://jujucharms.com/hadoop-processing/).
@@ -65,7 +60,6 @@ mirror options. See [Configuring Models][] for more information.
 
 [getting-started]: https://jujucharms.com/docs/stable/getting-started
 [apache bigtop bundles]: https://jujucharms.com/u/bigdata-charmers/#bundles
-[juju-quickstart]: https://launchpad.net/juju-quickstart
 [apache-flume-syslog]: https://jujucharms.com/apache-flume-syslog
 [apache-flume-kafka]: https://jujucharms.com/apache-flume-kafka
 [Configuring Models]: https://jujucharms.com/docs/stable/models-config

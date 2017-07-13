@@ -37,7 +37,7 @@ def configure_flume(hdfs):  # pylint: disable=unused-argument
 
 
 @when('flume-hdfs.started')
-@when_not('hadoop.ready')
+@when_not('hadoop.hdfs.ready')
 def stop_flume():
     flume = Flume()
     flume.stop()
